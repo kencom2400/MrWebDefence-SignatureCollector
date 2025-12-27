@@ -13,10 +13,14 @@
   - GitHub: priority: critical > high > medium > low
   - Jira: Critical > High > Medium > Low
 - [ ] 最優先Issueを自動選択
-- [ ] **🚨 CRITICAL: 必ずフィーチャーブランチを作成**（`feat/XXX-description` または `fix/XXX-description`）
-- [ ] ステータスを「In Progress」に変更
+- [ ] **🚨 CRITICAL: 必ずフィーチャーブランチを作成**（`feature/{ISSUE_KEY}-{タイトル}` 形式）
+  - Jira: `feature/{ISSUE_KEY}-{タイトル}`（例: `feature/MWD-18-task-1-1`）
+  - GitHub: `feature/issue-{ISSUE_NUM}-{タイトル}`（例: `feature/issue-198-description`）
+- [ ] **🚨 CRITICAL: 必ずステータスを「In Progress」に変更**
   - GitHub Projects: 「🚧 In Progress」
   - Jira: 「In Progress」（日本語: 「進行中」）
+  - **必須**: チケット開始時には必ずステータスを「In Progress」に変更すること
+  - ステータス変更に失敗した場合は警告を表示するが、作業は継続可能
 
 **🔴 絶対禁止事項:**
 
@@ -34,10 +38,39 @@
 
 - ✅ 質問・確認なしで即座に実行
 - ✅ **必ずフィーチャーブランチを作成してから作業開始**
-- ✅ IssueトラッカーのステータスをIn Progressに変更
+- ✅ **必ずIssueトラッカーのステータスをIn Progressに変更**
   - GitHub Projects: `./scripts/github/workflow/start-task.sh`
   - Jira: `./scripts/jira/workflow/start-task.sh`
+  - **詳細**: 上記の「🚨 CRITICAL: 必ずステータスを「In Progress」に変更」を参照
 - ✅ 各IssueのAssignee情報を確認し、自分にアサインされているものをフィルタリング
+
+**🔴 実行権限について:**
+
+`@start-task`コマンドの実行時は、以下の理由から**必ず`required_permissions: ['all']`を指定**してください：
+
+1. **API呼び出し**: Issue情報の取得、ステータス遷移（GitHub API / Jira API）
+2. **Git操作**: ブランチの作成、チェックアウト、プル
+3. **ネットワーク接続**: HTTPSでのAPI接続、証明書検証
+
+**サンドボックス環境ではこれらの操作がエラーになるため、最初からall権限で実行すること。**
+
+```typescript
+// ✅ 正しい実行方法（Jiraプロジェクトの場合）
+run_terminal_cmd({
+  command: 'bash scripts/jira/workflow/start-task.sh',
+  required_permissions: ['all'],
+});
+
+// ✅ 正しい実行方法（GitHubプロジェクトの場合）
+run_terminal_cmd({
+  command: 'bash scripts/github/workflow/start-task.sh',
+  required_permissions: ['all'],
+});
+```
+
+**🚨 CRITICAL: AIアシスタントへの指示**
+
+`@start-task`コマンドを受け取った際は、**必ず`required_permissions: ['all']`を指定して実行**してください。これは必須事項です。サンドボックス環境の制限により、ネットワーク接続やGit操作が失敗するため、最初からall権限で実行する必要があります。
 
 ---
 
