@@ -20,6 +20,7 @@
 @include .cursor/rules/02-code-standards.d/03-04-implementation-checklist.md
 @include .cursor/rules/02-code-standards.d/03-05-script-tools.md
 @include .cursor/rules/02-code-standards.d/04-01-gemini-learnings.md
+@include .cursor/rules/02-task-start.md
 @include .cursor/rules/03-git-workflow.d/02-commit-rules.md
 @include .cursor/rules/03-git-workflow.d/03-push-check.md
 @include .cursor/rules/04-github-integration.d/01-projects-setup.md
@@ -29,6 +30,7 @@
 @include .cursor/rules/04-github-integration.d/04-github-integration.md
 @include .cursor/rules/04-github-integration.d/04-start-task.md
 @include .cursor/rules/04-github-integration.d/05-jira-integration.md
+@include .cursor/rules/05-jira-integration.md
 @include .cursor/rules/templates/issue-report.md
 @include .cursor/rules/templates/pr-description.md
 
